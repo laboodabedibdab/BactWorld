@@ -13,6 +13,7 @@ font = pygame.font.SysFont("Verdana", WIDTH // 50)
 big_font = pygame.font.SysFont("Verdana", WIDTH // 25)
 
 objects = pygame.sprite.Group()
+places = pygame.sprite.Group()
 running = True
 
 while running:
@@ -22,6 +23,11 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             obj: Photosynthetic = Photosynthetic(event.pos)
             objects.add(obj)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
+            comb_group = pygame.sprite.Group()
+            comb_group.add(objects)
+            comb_group.add(places)
+            objects.sprites()[0].smart_vel_change(comb_group)
     screen.fill((0, 0, 0))
     objects.draw(screen)
     objects.update(objects)

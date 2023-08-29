@@ -3,7 +3,7 @@ import pygame
 
 
 class BactParent(pygame.sprite.Sprite):
-    def __init__(self, image: str, pos: tuple, mass: int, radius: int):
+    def __init__(self, image: str, pos: tuple, mass: int, radius: int, en: int, speed: int, sig_co: tuple):
 
         super().__init__()
         self.image = pygame.image.load(image)
@@ -11,6 +11,9 @@ class BactParent(pygame.sprite.Sprite):
         self.mass = mass
         self.vel = [0, 0]
         self.radius = radius
+        self.en = en
+        self.speed = speed
+        self.sig_co = sig_co
 
     def update(self, objects):
         for bact in objects:
@@ -32,10 +35,15 @@ class BactParent(pygame.sprite.Sprite):
                     self.vel[1] -= overlap_y / self.mass
                     bact.vel[0] += overlap_x / bact.mass
                     bact.vel[1] += overlap_y / bact.mass
-                elif distance > min_distance+5:
+                elif distance > min_distance + 5:
                     self.vel[0] += force_x / self.mass
                     self.vel[1] += force_y / self.mass
         self.rect.move_ip(self.vel)
-        self.vel = [self.vel[0]/1.01, self.vel[1]/1.01]
-    # def smart_vel_change(self, en, pos, signals):
-    #
+        self.vel = [self.vel[0] / 1.01, self.vel[1] / 1.01]
+
+    def smart_vel_change(self, objects):
+        for obj in objects:
+            dx = obj.rect.centerx - self.rect.centerx
+            dy = obj.rect.centery - self.rect.centery
+            distance = math.sqrt(dx ** 2 + dy ** 2)
+            print(distance)
