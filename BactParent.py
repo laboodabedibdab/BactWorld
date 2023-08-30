@@ -20,6 +20,9 @@ class BactParent(pygame.sprite.Sprite):
         self.moment = pymunk.moment_for_circle(mass, 0, self.radius)
         self.body = pymunk.Body(self.mass, self.moment)
         self.body.position = pos
+        self.rect = self.image.get_rect()
+        self.rect.centerx = pos[0]
+        self.rect.centery = pos[1]
 
         self.en = en
         self.speed = speed
@@ -28,7 +31,7 @@ class BactParent(pygame.sprite.Sprite):
     def update(self, objects):
         for obj2 in objects:
             if self != obj2:
-                attraction_force = custom_attraction(self.body, obj2.body)
+                attraction_force = custom_attraction(self, obj2)
                 self.body.apply_force_at_world_point(attraction_force, self.body.position)
 
     def smart_vel_change(self, objects):
