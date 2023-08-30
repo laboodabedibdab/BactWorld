@@ -1,4 +1,5 @@
 import pygame
+import pymunk
 from pygame.locals import FULLSCREEN
 from photosynthetic import Photosynthetic
 
@@ -11,6 +12,8 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("Verdana", WIDTH // 50)
 big_font = pygame.font.SysFont("Verdana", WIDTH // 25)
+space = pymunk.Space()
+space.gravity = (0, 0)
 
 objects = pygame.sprite.Group()
 places = pygame.sprite.Group()
