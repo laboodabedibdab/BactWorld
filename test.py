@@ -1,7 +1,7 @@
+import random
+
 import pygame
 import pymunk
-import random
-import math
 
 # Инициализация Pygame
 pygame.init()
@@ -20,6 +20,8 @@ space = pymunk.Space()
 space.gravity = (0, 0)  # Отключение гравитации
 
 speed = int(input())
+
+
 # Функция для притяжения между спрайтами
 def custom_attraction(body, other_body):
     G = 50000  # Коэффициент притяжения
@@ -27,6 +29,7 @@ def custom_attraction(body, other_body):
     force_magnitude = G / distance ** 2
     force_vector = force_magnitude * (other_body.position - body.position).normalized()
     return force_vector
+
 
 # Создание круглых спрайтов
 circles = []
@@ -68,7 +71,7 @@ while running:
         elif pos_y + radius > screen_height:
             body.velocity = pymunk.Vec2d(body.velocity.x, -20)
     # Обновление Pymunk
-    space.step(1/speed)
+    space.step(1 / speed)
 
     # Отрисовка
     screen.fill(white)

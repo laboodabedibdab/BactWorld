@@ -26,14 +26,15 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             obj: Photosynthetic = Photosynthetic(event.pos)
             objects.add(obj)
+            space.add(obj.body, obj.shape)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
             comb_group = pygame.sprite.Group()
             comb_group.add(objects)
             comb_group.add(places)
             objects.sprites()[0].smart_vel_change(comb_group)
     screen.fill((0, 0, 0))
+    space.step(1 / 40)
     objects.draw(surface=screen)
     objects.update(objects)
-    space.step(1 / 40)
     pygame.display.flip()
     clock.tick(40)
