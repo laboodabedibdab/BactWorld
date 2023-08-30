@@ -1,5 +1,13 @@
-import math
 import pygame
+import pymunk
+
+
+def custom_attraction(obj, obj2):
+    g = 50000  # Коэффициент притяжения
+    distance = obj.body.position.get_distance(obj2.body.position)
+    force_magnitude = g / distance ** 2
+    force_vector = force_magnitude * (obj2.body.position - obj.body.position).normalized()
+    return force_vector
 
 
 class BactParent(pygame.sprite.Sprite):
@@ -7,43 +15,23 @@ class BactParent(pygame.sprite.Sprite):
 
         super().__init__()
         self.image = pygame.image.load(image)
-        self.rect = self.image.get_rect(center=pos)
         self.mass = mass
-        self.vel = [0, 0]
         self.radius = radius
+        self.moment = pymunk.moment_for_circle(mass, 0, self.radius)
+        self.body = pymunk.Body(self.mass, self.moment)
+        self.body.position = pos
+
         self.en = en
         self.speed = speed
         self.sig_co = sig_co
 
     def update(self, objects):
-        for bact in objects:
-            if bact != self:
-                dx = bact.rect.centerx - self.rect.centerx
-                dy = bact.rect.centery - self.rect.centery
-                distance = math.sqrt(dx ** 2 + dy ** 2)
-                force_magnitude = (self.mass * bact.mass) / (distance ** 2 + 0.001) * 20
-                angle = math.atan2(dy, dx)
-                force_x = force_magnitude * math.cos(angle)
-                force_y = force_magnitude * math.sin(angle)
-                min_distance = self.radius + bact.radius
-
-                if distance <= min_distance:
-                    overlap = min_distance - distance
-                    overlap_x = overlap * math.cos(angle)
-                    overlap_y = overlap * math.sin(angle)
-                    self.vel[0] -= overlap_x / self.mass
-                    self.vel[1] -= overlap_y / self.mass
-                    bact.vel[0] += overlap_x / bact.mass
-                    bact.vel[1] += overlap_y / bact.mass
-                elif distance > min_distance + 5:
-                    self.vel[0] += force_x / self.mass
-                    self.vel[1] += force_y / self.mass
-        self.rect.move_ip(self.vel)
-        self.vel = [self.vel[0] / 1.01, self.vel[1] / 1.01]
+        for obj2 in objects:
+            if self != obj2:
+                attraction_force = custom_attraction(self.body, obj2.body)
+                self.body.apply_force_at_world_point(attraction_force, self.body.position)
 
     def smart_vel_change(self, objects):
-        for obj in objects:
-            dx = obj.rect.centerx - self.rect.centerx
-            dy = obj.rect.centery - self.rect.centery
-            distance = math.sqrt(dx ** 2 + dy ** 2)
+        for obj2 in objects:
+            distance = self.body.position.get_distance(obj2.body.position)
             print(distance)

@@ -15,8 +15,8 @@ big_font = pygame.font.SysFont("Verdana", WIDTH // 25)
 space = pymunk.Space()
 space.gravity = (0, 0)
 
-objects = pygame.sprite.Group()
-places = pygame.sprite.Group()
+objects = pygame.sprite.Group
+places = pygame.sprite.Group
 running = True
 
 while running:
@@ -32,7 +32,8 @@ while running:
             comb_group.add(places)
             objects.sprites()[0].smart_vel_change(comb_group)
     screen.fill((0, 0, 0))
-    objects.draw(screen)
+    objects.draw(surface=screen)
     objects.update(objects)
+    space.step(1 / 40)
     pygame.display.flip()
     clock.tick(40)
