@@ -53,4 +53,4 @@ class Widgets:
         self.sim_button.inactiveColour = [(200, 50, 0), (0, 200, 20)][self.sim_paused]
         self.sim_button.hoverColour = [(250, 50, 0), (0, 250, 20)][self.sim_paused]
         self.sim_button.pressedColour = [(0, 200, 20), (200, 50, 0)][self.sim_paused]
-        self.sim_button.string = ['Stop', 'Start'][self.sim_paused]
+        self.sim_button.text = self.sim_button.font.render(['Stop', 'Start'][self.sim_paused], True, self.sim_button.textColour)
