@@ -2,6 +2,7 @@ import pygame
 import pymunk
 from pygame.locals import FULLSCREEN
 from photosynthetic import Photosynthetic
+from ControlBar import Widgets
 
 pygame.init()
 inf = pygame.display.Info()
@@ -15,6 +16,7 @@ big_font = pygame.font.SysFont("Verdana", WIDTH // 25)
 space = pymunk.Space()
 space.gravity = (0, 0)
 
+widgets = Widgets(screen)
 objects = pygame.sprite.Group()
 places = pygame.sprite.Group()
 running = True
