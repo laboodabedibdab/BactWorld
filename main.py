@@ -38,5 +38,6 @@ while running:
     space.step(1 / 240)
     objects.draw(surface=screen)
     objects.update(objects)
+    widgets.update(events=pygame.event.get())
     pygame.display.flip()
     clock.tick(240)
