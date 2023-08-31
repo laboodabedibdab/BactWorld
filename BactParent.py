@@ -15,7 +15,7 @@ class BactParent(pygame.sprite.Sprite): # это класс от которог�
                                 # картинка позиция масса радиус энергия скорость (sin_go) - коеффициент отвечающий за поведение бактерии
         super().__init__()
         self.image = pygame.image.load(image)
-        self.mass = mass
+        self.mass = mass # масса
         self.radius = radius
         self.moment = pymunk.moment_for_circle(mass, 0, self.radius) # вычисляет инерцию(масса, чужой радиус, свой радиус)
         self.body = pymunk.Body(self.mass, self.moment) # тело масса и инерция (это тело для работы пиманка)
