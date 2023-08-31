@@ -15,7 +15,7 @@ class BactParent(pygame.sprite.Sprite): # это класс от которог�
                                 # картинка позиция масса радиус энергия скорость (sin_go) - коеффициент отвечающий за поведение бактерии
         super().__init__()
         self.image = pygame.image.load(image)
-        self.mass = mass # масса
+        self.mass = mass
         self.radius = radius
         self.moment = pymunk.moment_for_circle(mass, 0, self.radius) # вычисляет инерцию(масса, чужой радиус, свой радиус)
         self.body = pymunk.Body(self.mass, self.moment) # тело масса и инерция (это тело для работы пиманка)
@@ -30,15 +30,15 @@ class BactParent(pygame.sprite.Sprite): # это класс от которог�
         self.sig_co = sig_co
 
     def update(self, objects): # функция отвечает за обновление
-        for obj2 in objects:
-            if self != obj2:
-                attraction_force = custom_attraction(self, obj2)
-                self.body.apply_force_at_world_point(attraction_force, self.body.position)
+        for obj2 in objects: # из объектов он выбирает первый элемент это и будет obj2
+            if self != obj2: # далее он исключает obj2
+                attraction_force = custom_attraction(self, obj2) # self передаёт экземпляр
+                self.body.apply_force_at_world_point(attraction_force, self.body.position) # apply_force_at_world_point - применить силу к обьекту в спейсе
         self.rect.centerx = self.body.position.x
         self.rect.centery = self.body.position.y
 
     def draw(self, screen):
-        screen.blit(self.image, self.rect.center)
+        screen.blit(self.image, self.rect.center) # она перед отрисовкой добавляет картинку(в скобках ссылка на картинку и центр шарика)
 
     def smart_vel_change(self, objects):
         for obj2 in objects:
