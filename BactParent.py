@@ -1,7 +1,7 @@
 import pygame
 import pymunk  #физика игры
 
-
+#ПРИВЕЕЕЕЕТ
 def custom_attraction(obj, obj2): #индивидуальный аттракцион ЭТА ФУНКЦИЯ СЧИТАЕТ ВЕКТОР СИЛЫ
     g = 50000  # Коэффициент притяжения
     distance = obj.body.position.get_distance(obj2.body.position) #объект тело позиция берём дистанцию( объект2 тело димтанция) смотрим дистанцию между двумя телами
