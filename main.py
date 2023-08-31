@@ -22,10 +22,11 @@ places = pygame.sprite.Group()
 running = True
 
 while running:
-    for event in pygame.event.get():
+    events = pygame.event.get()
+    for event in events:
         if (event.type == pygame.KEYDOWN and event.key == pygame.K_q) or (event.type == pygame.QUIT):
             running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.pos[0] > 140:
             obj: Photosynthetic = Photosynthetic(event.pos)
             objects.add(obj)
             space.add(obj.body, obj.shape)
@@ -37,7 +38,8 @@ while running:
     screen.fill((0, 0, 0))
     space.step(1 / 240)
     objects.draw(surface=screen)
+    print(events)
     objects.update(objects)
-    widgets.update(events=pygame.event.get())
+    widgets.update(events)
     pygame.display.flip()
     clock.tick(240)
