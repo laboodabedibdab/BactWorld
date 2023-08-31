@@ -35,7 +35,7 @@ class BactParent(pygame.sprite.Sprite): # это класс от которог�
                 attraction_force = custom_attraction(self, obj2) # self передаёт экземпляр
                 self.body.apply_force_at_world_point(attraction_force, self.body.position) # apply_force_at_world_point - применить силу к обьекту в спейсе
         self.rect.centerx = self.body.position.x
-        self.rect.centery = self.body.position.y#
+        self.rect.centery = self.body.position.y
 
     def draw(self, screen):
         screen.blit(self.image, self.rect.center) # она перед отрисовкой добавляет картинку(в скобках ссылка на картинку и центр шарика)
