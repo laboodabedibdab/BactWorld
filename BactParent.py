@@ -5,7 +5,7 @@ import pymunk
 def custom_attraction(obj, obj2):
     g = 50000  # Коэффициент притяжения
     distance = obj.body.position.get_distance(obj2.body.position)
-    force_magnitude = g / distance ** 2
+    force_magnitude = g / (distance ** 2 + 1)
     force_vector = force_magnitude * (obj2.body.position - obj.body.position).normalized()
     return force_vector
 
