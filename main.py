@@ -20,6 +20,7 @@ widgets = Widgets(screen)
 objects = pygame.sprite.Group()
 places = pygame.sprite.Group()
 running = True
+FPS = 120
 
 while running:
     events = pygame.event.get()
@@ -36,10 +37,10 @@ while running:
             comb_group.add(places)
             objects.sprites()[0].smart_vel_change(comb_group)
     screen.fill((0, 0, 0))
-    space.step(1 / 240)
+    space.step(1 / (FPS / widgets.sim_slider.getValue()))
     objects.draw(surface=screen)
     print(events)
     objects.update(objects)
-    widgets.update(events)
+    widgets.update(events, screen, clock)
     pygame.display.flip()
-    clock.tick(240)
+    clock.tick(FPS)
