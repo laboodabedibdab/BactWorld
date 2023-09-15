@@ -16,8 +16,8 @@ big_font = pygame.font.SysFont("Verdana", WIDTH // 25)
 space = pymunk.Space()
 space.gravity = (0, 0)
 
-widgets = Widgets(screen)
 objects = pygame.sprite.Group()
+widgets = Widgets(screen)
 places = pygame.sprite.Group()
 running = True
 FPS = 500
@@ -42,5 +42,9 @@ while running:
     objects.draw(surface=screen)
     objects.update(objects)
     widgets.update(events, screen, clock)
+    if widgets.clearV:
+        space = pymunk.Space()
+        objects = pygame.sprite.Group()
+        widgets.clearV = False
     pygame.display.flip()
     clock.tick(FPS)
