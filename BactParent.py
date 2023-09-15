@@ -69,7 +69,8 @@ class BactParent(pygame.sprite.Sprite):
         self.places = places
         for obj in objects:
             if self != obj:
-                self.objects_co.append(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius))
+                self.objects_co.append(
+                    self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius) * self.sig_co[3])
         # for plc in places:
         #     self.objects_co.append(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius))
         # self.places_co
