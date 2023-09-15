@@ -1,4 +1,5 @@
 import math
+import random
 
 import pygame
 import pymunk
@@ -18,6 +19,7 @@ class BactParent(pygame.sprite.Sprite):
                  places, objects):
 
         super().__init__()
+        self.id = random.randint(100000000, 999999999)
         self.co = (None, 0)
         self.objects_co = {}
         self.space = space
@@ -69,11 +71,12 @@ class BactParent(pygame.sprite.Sprite):
         self.places = places
         for obj in objects:
             if self != obj:
-                self.objects_co[obj] = self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius) * \
-                                       self.sig_co[3]
+                print(int(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius) * self.sig_co[3]))
+                self.objects_co[int(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius) * self.sig_co[
+                    3])] = obj
         # for plc in places:
         #     self.objects_co.append(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius))
         # self.places_co
         # max(self.places_co) +
         if len(self.objects_co):
-            self.co = min(self.objects_co.items(), key=lambda p: p[1])
+            self.co = min(self.objects_co.items(), key=lambda p: int(p[0]))
