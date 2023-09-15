@@ -18,7 +18,7 @@ class BactParent(pygame.sprite.Sprite):
                  places, objects):
 
         super().__init__()
-        self.co = None
+        self.co = 0
         self.objects_co = []
         self.space = space
         self.places = places
@@ -38,7 +38,7 @@ class BactParent(pygame.sprite.Sprite):
         self.speed = speed
         self.sig_co = sig_co
 
-    def update(self, objects):
+    def update(self, objects, places):
         self.objects_co = []
         for obj2 in objects:
             if self != obj2:
@@ -46,6 +46,8 @@ class BactParent(pygame.sprite.Sprite):
                 self.body.apply_force_at_world_point(attraction_force, self.body.position)
         self.rect.centerx = self.body.position.x
         self.rect.centery = self.body.position.y
+        self.add_co(objects, places)
+        print(int(self.co))
 
     def draw(self, screen):
         screen.blit(self.image, self.rect.center)
@@ -57,17 +59,20 @@ class BactParent(pygame.sprite.Sprite):
 
     def get_distance(self, x, y, x2=None, y2=None, r=None):
         if r is None:
-            return math.sqrt((self.rect.centerx - (x + x2) / 2) ** 2 + (self.rect.centery - (y + y2) / 2) ** 2)
-        return math.sqrt((self.rect.centerx - x) ** 2 + (self.rect.centery - y) ** 2) - r
+            return math.sqrt(
+                (self.rect.centerx - (x + x2) / 2) ** 2 + (self.rect.centery - (y + y2) / 2) ** 2) - self.radius
+        return math.sqrt((self.rect.centerx - x) ** 2 + (self.rect.centery - y) ** 2) - r - self.radius
 
     @abstractmethod
     def add_co(self, objects, places):
         self.objects = objects
         self.places = places
         for obj in objects:
-            self.objects_co.append(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius))
+            if self != obj:
+                self.objects_co.append(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius))
         # for plc in places:
         #     self.objects_co.append(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius))
         # self.places_co
         # max(self.places_co) +
-        self.co = max(self.objects_co)
+        if len(self.objects_co):
+            self.co = min(self.objects_co)

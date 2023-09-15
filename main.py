@@ -6,10 +6,11 @@ from ControlBar import Widgets
 
 pygame.init()
 inf = pygame.display.Info()
-WIDTH = inf.current_w
-HEIGHT = inf.current_h
+WIDTH = inf.current_w//2
+HEIGHT = inf.current_h//2
 print(WIDTH, HEIGHT)
-screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
+# , FULLSCREEN
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("Verdana", WIDTH // 50)
 big_font = pygame.font.SysFont("Verdana", WIDTH // 25)
@@ -28,7 +29,7 @@ while running:
         if (event.type == pygame.KEYDOWN and event.key == pygame.K_q) or (event.type == pygame.QUIT):
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN and event.pos[0] > 140:
-            obj: Photosynthetic = Photosynthetic(event.pos)
+            obj: Photosynthetic = Photosynthetic(event.pos, space, objects, places)
             objects.add(obj)
             space.add(obj.body, obj.shape)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
@@ -40,7 +41,7 @@ while running:
     if not widgets.sim_paused:
         space.step(1 / (FPS / widgets.sim_slider.getValue()))
     objects.draw(surface=screen)
-    objects.update(objects)
+    objects.update(objects, places)
     widgets.update(events, screen, clock)
     if widgets.clearV:
         space = pymunk.Space()
