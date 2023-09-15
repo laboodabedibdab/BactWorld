@@ -1,5 +1,8 @@
+import math
+
 import pygame
 import pymunk
+from abc import abstractmethod
 
 
 def custom_attraction(obj, obj2):
@@ -11,9 +14,15 @@ def custom_attraction(obj, obj2):
 
 
 class BactParent(pygame.sprite.Sprite):
-    def __init__(self, image: str, pos: tuple, mass: int, radius: int, en: int, speed: int, sig_co: tuple):
+    def __init__(self, image: str, pos: tuple, mass: int, radius: int, en: int, speed: int, sig_co: tuple, space,
+                 places, objects):
 
         super().__init__()
+        self.co = None
+        self.objects_co = []
+        self.space = space
+        self.places = places
+        self.objects = objects
         self.image = pygame.image.load(image)
         self.mass = mass
         self.radius = radius
@@ -30,6 +39,7 @@ class BactParent(pygame.sprite.Sprite):
         self.sig_co = sig_co
 
     def update(self, objects):
+        self.objects_co = []
         for obj2 in objects:
             if self != obj2:
                 attraction_force = custom_attraction(self, obj2)
@@ -44,3 +54,20 @@ class BactParent(pygame.sprite.Sprite):
         for obj2 in objects:
             distance = self.body.position.get_distance(obj2.body.position)
             print(distance)
+
+    def get_distance(self, x, y, x2=None, y2=None, r=None):
+        if r is None:
+            return math.sqrt((self.rect.centerx - (x + x2) / 2) ** 2 + (self.rect.centery - (y + y2) / 2) ** 2)
+        return math.sqrt((self.rect.centerx - x) ** 2 + (self.rect.centery - y) ** 2) - r
+
+    @abstractmethod
+    def add_co(self, objects, places):
+        self.objects = objects
+        self.places = places
+        for obj in objects:
+            self.objects_co.append(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius))
+        # for plc in places:
+        #     self.objects_co.append(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius))
+        # self.places_co
+        # max(self.places_co) +
+        self.co = max(self.objects_co)
