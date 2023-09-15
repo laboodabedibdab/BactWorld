@@ -53,7 +53,7 @@ class BactParent(pygame.sprite.Sprite):
 
     def draw(self, screen):
         screen.blit(self.image, self.rect.center)
-
+#12
     def smart_vel_change(self, objects):
         for obj2 in objects:
             distance = self.body.position.get_distance(obj2.body.position)
