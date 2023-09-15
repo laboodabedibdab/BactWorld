@@ -7,6 +7,7 @@ from pygame_widgets.slider import Slider
 class Widgets:
     def __init__(self, screen, sim_paused=0):
         self.clearV = False
+        self.running = True
         self.clr_button = Button(
             # Mandatory Parameters
             screen,  # Surface to place button on
@@ -25,6 +26,25 @@ class Widgets:
             pressedColour=(0, 200, 20),  # Colour of button when being clicked
             radius=20,  # Radius of border corners (leave empty for not curved)
             onClick=self.clear  # Function to call when clicked on
+        )
+        self.ext_button = Button(
+            # Mandatory Parameters
+            screen,  # Surface to place button on
+            20,  # X-coordinate of top left corner
+            300,  # Y-coordinate of top left corner
+            100,  # Width
+            40,  # Height
+
+            # Optional Parameters
+            text='exit',  # Text to display
+            fontSize=50,  # Size of font
+            margin=20,  # Minimum distance between text/image and edge of button
+            inactiveColour=(200, 50, 0),
+            # Colour of button when not being interacted with
+            hoverColour=(250, 50, 0),  # Colour of button when being hovered over
+            pressedColour=(0, 200, 20),  # Colour of button when being clicked
+            radius=20,  # Radius of border corners (leave empty for not curved)
+            onClick=self.stop  # Function to call when clicked on
         )
         self.sim_paused = sim_paused
         self.sim_button = Button(
@@ -67,6 +87,9 @@ class Widgets:
 
     def clear(self):
         self.clearV = True
+
+    def stop(self):
+        self.running = False
 
     def update(self, events, screen, clock: pygame.time.Clock):
         self.FPS = clock.get_fps()

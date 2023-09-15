@@ -46,5 +46,8 @@ while running:
         space = pymunk.Space()
         objects = pygame.sprite.Group()
         widgets.clearV = False
+    running = widgets.running
+    if not widgets.running:
+        print(0)
     pygame.display.flip()
     clock.tick(FPS)
