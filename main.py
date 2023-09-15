@@ -20,7 +20,7 @@ objects = pygame.sprite.Group()
 widgets = Widgets(screen)
 places = pygame.sprite.Group()
 running = True
-FPS = 500
+FPS = 120
 
 while running:
     events = pygame.event.get()
