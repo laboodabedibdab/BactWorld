@@ -18,7 +18,7 @@ class BactParent(pygame.sprite.Sprite):
                  places, objects):
 
         super().__init__()
-        self.co = (None,0)
+        self.co = (None, 0)
         self.objects_co = {}
         self.space = space
         self.places = places
@@ -69,8 +69,8 @@ class BactParent(pygame.sprite.Sprite):
         self.places = places
         for obj in objects:
             if self != obj:
-                self.objects_co[obj] = int(
-                    self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius) * self.sig_co[3])
+                self.objects_co[obj] = self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius) * \
+                                       self.sig_co[3]
         # for plc in places:
         #     self.objects_co.append(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius))
         # self.places_co
