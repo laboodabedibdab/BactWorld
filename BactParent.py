@@ -20,7 +20,7 @@ class BactParent(pygame.sprite.Sprite):
 
         super().__init__()
         self.id = random.randint(100000000, 999999999)
-        self.co = (None, 0)
+        self.co = (0, None)
         self.objects_co = {}
         self.space = space
         self.places = places
@@ -41,7 +41,6 @@ class BactParent(pygame.sprite.Sprite):
         self.sig_co = sig_co
 
     def update(self, objects, places):
-        self.objects_co = []
         for obj2 in objects:
             if self != obj2:
                 attraction_force = custom_attraction(self, obj2)
@@ -49,11 +48,12 @@ class BactParent(pygame.sprite.Sprite):
         self.rect.centerx = self.body.position.x
         self.rect.centery = self.body.position.y
         self.add_co(objects, places)
-        print(int(self.co[1]))
+        print(int(self.co[0]))
 
     def draw(self, screen):
         screen.blit(self.image, self.rect.center)
-#12
+
+    # 12
     def smart_vel_change(self, objects):
         for obj2 in objects:
             distance = self.body.position.get_distance(obj2.body.position)
@@ -71,9 +71,8 @@ class BactParent(pygame.sprite.Sprite):
         self.places = places
         for obj in objects:
             if self != obj:
-                print(int(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius) * self.sig_co[3]))
-                self.objects_co[int(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius) * self.sig_co[
-                    3])] = obj
+                index = int(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius) * self.sig_co[3])
+                self.objects_co[index] = obj
         # for plc in places:
         #     self.objects_co.append(self.get_distance(obj.rect.centerx, obj.rect.centery, r=obj.radius))
         # self.places_co
