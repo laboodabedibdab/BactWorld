@@ -1,7 +1,7 @@
 import pygame
 import pymunk
 from pygame.locals import FULLSCREEN
-from photosynthetic import Photosynthetic
+from Bacterials import Photosynthetic
 from ControlBar import Widgets
 
 pygame.init()
